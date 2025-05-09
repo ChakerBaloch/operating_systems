@@ -34,13 +34,13 @@ Meanwhile, the parent process stores all child PIDs in an array and waits for ea
 
 ## Results and Observations
 
-### A. **Process Creation and Management**
+### **Process Creation and Management**
 
 The `fork()` system call is used to create each child process. It duplicates the parent process, allowing both the parent and the child to execute independently. Once inside the child block, `execlp()` replaces the child’s code with a new program (like `ls` or `date`). This illustrates how a new program can be loaded into a process space using exec-family functions.
 
 The parent process maintains control and avoids zombie processes by using `waitpid()` to monitor each child. By capturing the PID and exit status, the parent can print meaningful status messages and ensure proper cleanup.
 
-### B. **Parent and Child Interaction**
+### **Parent and Child Interaction**
 
 The parent doesn’t perform any logic apart from waiting for children to finish and reporting their termination status. The child processes execute their commands and exit, while the parent synchronizes their completion. This clearly demonstrates one-way control where the parent oversees execution but does not interfere once a child starts running its command. This separation reinforces the concept that once a child calls `exec`, it becomes a new process with its own behavior, separate from the original C program.
 
