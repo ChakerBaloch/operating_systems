@@ -1,20 +1,20 @@
-# 🧵 Lab 02: Multi-Process Execution in C
+# Multi-Process Execution in C
 
 This Lab demonstrates how to create and manage multiple processes in C using low-level system calls like `fork()`, `exec`, and `waitpid()`. Each child process executes a different shell command, showcasing how UNIX-based systems handle concurrent tasks. The project highlights practical process control, system-level programming, and synchronization between parent and child processes.
 
 ---
 
-## 📌 Introduction
+## Introduction
 
 In operating systems, processes are fundamental units of execution. Learning how to manage processes at a low level is key for systems programming. This lab assignment focuses on creating multiple child processes using `fork()` and executing shell commands within those children using the `exec` family of functions. It also emphasizes process synchronization using `waitpid()`, ensuring the parent properly manages and monitors its children. This exercise bridges theoretical knowledge about processes with hands-on C programming.
 
 ---
 
-## 🛠️ Implementation Summary
+## Implementation Summary
 
 The program is implemented in a single C file named `lab02.c`. It begins by creating a loop that runs 10 times, each time calling `fork()` to spawn a child process. Inside each child process (where `pid == 0`), a unique command is executed using `execlp()` depending on the value of the loop counter.
 
-### 🔧 Commands executed by child processes:
+### Commands executed by child processes:
 - `echo "Hello Chaker"`
 - `ls -l`
 - `date`
@@ -32,7 +32,7 @@ Meanwhile, the parent process stores all child PIDs in an array and waits for ea
 
 ---
 
-## 📈 Results and Observations
+## Results and Observations
 
 ### A. **Process Creation and Management**
 
@@ -46,7 +46,7 @@ The parent doesn’t perform any logic apart from waiting for children to finish
 
 ---
 
-## ✅ Conclusion
+## Conclusion
 
 This lab was a valuable hands-on exercise in understanding process control in C and UNIX-based systems. It demonstrated the full lifecycle of child processes — from creation with `fork()`, to program replacement with `execlp()`, to termination monitoring with `waitpid()`. 
 
@@ -54,7 +54,7 @@ It also highlighted how to cleanly manage multiple concurrent child processes, e
 
 ---
 
-## 🧪 How to Compile and Run
+## How to Compile and Run
 
 A `Makefile` is provided to make compilation easy.
 
