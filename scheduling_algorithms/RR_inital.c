@@ -14,7 +14,6 @@ typedef struct {
 void calculateWaitingTimeAndExecutionOrder(Process proc[], int n, int quantum) {
     int current_time = 0, completed = 0, i, all_done;
 
-    // Initialize remaining and waiting times
     for (int j = 0; j < n; j++) {
         proc[j].remaining_time = proc[j].burst_time;
         proc[j].waiting_time = 0;
@@ -22,7 +21,6 @@ void calculateWaitingTimeAndExecutionOrder(Process proc[], int n, int quantum) {
 
     printf("Execution Order: ");
 
-    // Loop until all processes complete
     while (completed < n) {
         all_done = 1;
 
@@ -43,7 +41,6 @@ void calculateWaitingTimeAndExecutionOrder(Process proc[], int n, int quantum) {
             }
         }
 
-        // CPU idle if no ready process
         if (all_done) current_time++;
     }
 
@@ -72,7 +69,6 @@ void printProcesses(Process proc[], int n) {
                proc[i].waiting_time, proc[i].turnaround_time);
     }
 
-    // Calculate and print averages
     float total_waiting_time = 0, total_turnaround_time = 0;
     for (int i = 0; i < n; i++) {
         total_waiting_time += proc[i].waiting_time;
@@ -84,10 +80,30 @@ void printProcesses(Process proc[], int n) {
 }
 
 int main() {
-    // Test data: processes with arrival and burst times
     Process proc[] = {{1, 0, 24}, {2, 0, 3}, {3, 0, 3}};
-    int n = sizeof(proc) / sizeof(proc[0]); // Number of processes
-    int quantum = 4; // Time slice for RR
+    int n = sizeof(proc) / sizeof(proc[0]);
+    int quantum = 4;
+
+    // Error: no processes
+    if (n <= 0) {
+        fprintf(stderr, "Error: No processes to schedule.\n");
+        return 1;
+    }
+
+    // Error: invalid quantum
+    if (quantum <= 0) {
+        fprintf(stderr, "Error: Invalid quantum value. Must be > 0.\n");
+        return 1;
+    }
+
+    // Error: invalid process data
+    for (int i = 0; i < n; i++) {
+        if (proc[i].arrival_time < 0 || proc[i].burst_time <= 0) {
+            fprintf(stderr, "Error: Invalid data for process %d (arrival: %d, burst: %d).\n",
+                    proc[i].process_id, proc[i].arrival_time, proc[i].burst_time);
+            return 1;
+        }
+    }
 
     roundRobin(proc, n, quantum);
     printProcesses(proc, n);
